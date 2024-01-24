@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "start": "node src/index.js",
     "nodemon": "nodemon src/index.js",
-    
     "kinit": "knex init",
     "kmigrate:make": "knex migrate:make",
     "kmigrate:latest": "knex migrate:latest",
@@ -17,7 +16,6 @@
     "kmigrate:list": "knex migrate:list",
     "kseed:make": "knex seed:make",
     "kseed:run": "knex seed:run"
-
   },
   "keywords": [],
   "author": "",
@@ -34,6 +32,7 @@
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
-    "eslint-plugin-promise": "^6.0.0"
+    "eslint-plugin-promise": "^6.0.0",
+    "vitest": "^1.2.1"
   }
 }
