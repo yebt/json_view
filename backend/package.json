@@ -14,7 +14,10 @@
     "kmigrate:rollback": "knex migrate:rollback",
     "kmigrate:up": "knex migrate:up",
     "kmigrate:down": "knex migrate:down",
-    "kmigrate:list": "knex migrate:list"
+    "kmigrate:list": "knex migrate:list",
+    "kseed:make": "knex seed:make",
+    "kseed:run": "knex seed:run"
+
   },
   "keywords": [],
   "author": "",
