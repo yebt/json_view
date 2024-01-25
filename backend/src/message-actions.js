@@ -115,6 +115,7 @@ const clearAllMessages = () => {
     .delete()
     .from('messages')
 }
+
 module.exports = {
   storeMessage,
   getPaginatedMessages,
