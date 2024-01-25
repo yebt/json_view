@@ -14,9 +14,10 @@ module.exports = {
   useNullAsDefault: true,
   migrations: {
     tableName: 'migrations',
-    directory: 'data/migrations'
+    directory: './data/migrations'
+  },
+  seeds: {
+    directory: 'data/seeds'
+
   }
-  // seeds: {
-  //   directory: 'data/seeds'
-  // }
 }
