@@ -13,11 +13,11 @@ module.exports = {
   },
   useNullAsDefault: true,
   migrations: {
-    tableName: 'migrations',
-    directory: './data/migrations'
+    tableName: process.env.DATABASE_MIGRATIONS_TABLE || 'migrations',
+    directory: process.env.DATABASE_MIGRATIONS_DIR || './data/migrations'
   },
   seeds: {
-    directory: 'data/seeds'
-
+    tableName: process.env.DATABASE_SEEDS_TABLE || 'seeds',
+    directory: process.env.DATABASE_SEEDS_DIR || 'data/seeds'
   }
 }
