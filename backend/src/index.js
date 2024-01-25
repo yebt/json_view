@@ -12,7 +12,7 @@ const {
   updateMessageByUUID,
   deleteMessageByUUID,
   clearAllMessages
-} = require('./actions')
+} = require('./message-actions')
 const server = express()
 const messageRouter = express.Router()
 const crypto = require('node:crypto')
