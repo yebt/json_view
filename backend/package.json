@@ -15,7 +15,8 @@
     "kmigrate:down": "knex migrate:down",
     "kmigrate:list": "knex migrate:list",
     "kseed:make": "knex seed:make",
-    "kseed:run": "knex seed:run"
+    "kseed:run": "knex seed:run",
+    "format": "prettier --write src/**/*.js test/**/*.js && eslint --fix src/**/*.js test/**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +34,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
+    "prettier": "^3.2.4",
     "vitest": "^1.2.1"
   }
 }
