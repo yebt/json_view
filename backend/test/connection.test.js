@@ -4,7 +4,7 @@ import { destroyConnection, getConnection, initDb } from '../src/connection'
 import fs from 'fs'
 
 const dbFile = process.env.DATABASE_FILE
-const testDbFile = 'data/db/test.sqlite'
+const testDbFile = 'test/test.sqlite'
 
 /**
  * Removes the specified database file if it exists.
@@ -20,6 +20,8 @@ const removeDbFile = (dbFile) => {
 // setup
 beforeAll(async () => {
   process.env.DATABASE_FILE = testDbFile
+  process.env.DATABASE_SEEDS_DIR = 'test/seeds'
+  process.env.DATABASE_MIGRATIONS_DIR = 'test/migrations'
   destroyConnection()
   removeDbFile(testDbFile)
   await initDb()

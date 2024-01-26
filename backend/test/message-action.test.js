@@ -3,7 +3,15 @@ import { expect, test, suite, beforeAll, afterAll } from 'vitest'
 import { destroyConnection, initDb } from '../src/connection'
 import fs from 'fs'
 import crypto from 'node:crypto'
-import { clearAllMessages, deleteMessageByUUID, getPaginatedMessages, getSingleMessageByUUID, getTotalMessages, storeMessage, updateMessageByUUID } from '../src/message-actions'
+import {
+  clearAllMessages,
+  deleteMessageByUUID,
+  getPaginatedMessages,
+  getSingleMessageByUUID,
+  getTotalMessages,
+  storeMessage,
+  updateMessageByUUID
+} from '../src/message-actions'
 
 const dbFile = process.env.DATABASE_FILE
 const testDbFile = 'data/db/test-actions.sqlite'
@@ -22,6 +30,8 @@ const removeDbFile = (dbFile) => {
 // setup
 beforeAll(async () => {
   process.env.DATABASE_FILE = testDbFile
+  process.env.DATABASE_SEEDS_DIR = 'test/seeds'
+  process.env.DATABASE_MIGRATIONS_DIR = 'test/migrations'
   destroyConnection()
   removeDbFile(testDbFile)
   await initDb()
