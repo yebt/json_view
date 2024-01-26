@@ -14,7 +14,7 @@ import {
 } from '../src/message-actions'
 
 const dbFile = process.env.DATABASE_FILE
-const testDbFile = 'data/db/test-actions.sqlite'
+const testDbFile = 'test/data/test-actions.sqlite'
 
 /**
  * Removes the specified database file if it exists.
@@ -30,8 +30,8 @@ const removeDbFile = (dbFile) => {
 // setup
 beforeAll(async () => {
   process.env.DATABASE_FILE = testDbFile
-  process.env.DATABASE_SEEDS_DIR = 'test/seeds'
-  process.env.DATABASE_MIGRATIONS_DIR = 'test/migrations'
+  process.env.DATABASE_SEEDS_DIR = 'test/data/seeds'
+  process.env.DATABASE_MIGRATIONS_DIR = 'test/data/migrations'
   destroyConnection()
   removeDbFile(testDbFile)
   await initDb()
