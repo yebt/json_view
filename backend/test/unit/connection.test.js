@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { expect, test, suite, beforeAll, afterAll } from 'vitest'
-import { destroyConnection, getConnection, initDb } from '../src/connection'
+import { destroyConnection, getConnection, initDb } from 'src/connection'
 import fs from 'fs'
 
 const dbFile = process.env.DATABASE_FILE

@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { expect, test, suite, beforeAll, afterAll } from 'vitest'
-import { destroyConnection, initDb } from '../src/connection'
+import { destroyConnection, initDb } from '../../src/connection'
 import fs from 'fs'
 import crypto from 'node:crypto'
 import {
@@ -11,7 +11,7 @@ import {
   getTotalMessages,
   storeMessage,
   updateMessageByUUID
-} from '../src/message-actions'
+} from '../../src/message-actions'
 
 const dbFile = process.env.DATABASE_FILE
 const testDbFile = 'test/data/test-actions.sqlite'
