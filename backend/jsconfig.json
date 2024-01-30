@@ -1,12 +1,10 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
-    "compilerOptions": {
-        "module": "ES6",
-        "moduleResolution": "node",
-        "allowJs": true,
-    },
-    "include": ["src/**/*"],
-    "exclude": [
-        "node_modules",
-    ]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "module": "ES6",
+    "moduleResolution": "node",
+    "allowJs": true,
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
 }
