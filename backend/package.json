@@ -8,7 +8,7 @@
     "start": "node src/app.js",
     "nodemon": "nodemon src/app.js",
     "test": "vitest",
-    "format": "prettier --write . --ignore-path .gitignore && eslint . --fix --ignore-path .gitignore",
+    "format": "prettier --write . --ignore-path .gitignore && eslint . --fix --ignore-path .gitignore"
   },
   "keywords": [],
   "author": "",
