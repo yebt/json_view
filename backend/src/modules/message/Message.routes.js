@@ -16,9 +16,4 @@ messageRouter.put('/:UUID', MessageHTTPAdapter.patchMessageCommand)
 // Delete a message
 messageRouter.delete('/:UUID', MessageHTTPAdapter.deleteMessageCommand)
 
-// // List all messages
-// messageRouter.get('/', (req, res) => {
-//   res.json({ error: false, message: 'Message api registred ✉️' })
-// })
-
 export default messageRouter
