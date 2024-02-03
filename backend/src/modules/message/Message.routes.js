@@ -1,14 +1,24 @@
 import { Router } from 'express'
-import { storeMessage } from './Message.responses.js'
+import MessageHTTPAdapter from './Message.responses.js'
 
 const messageRouter = Router()
 
 // Save a new message
-messageRouter.post('/', storeMessage)
+messageRouter.post('/', MessageHTTPAdapter.storeMessageCommand)
+// save a new debug message
+messageRouter.post('/debug', MessageHTTPAdapter.storeDebuggMessageCommand)
+// Paginate messages
+messageRouter.get('/', MessageHTTPAdapter.listMessagesCommand)
+// Get a specific message
+messageRouter.get('/:UUID', MessageHTTPAdapter.showMessageCommand)
+// Update a message
+messageRouter.put('/:UUID', MessageHTTPAdapter.patchMessageCommand)
+// Delete a message
+messageRouter.delete('/:UUID', MessageHTTPAdapter.deleteMessageCommand)
 
-// List all messages
-messageRouter.get('/', (req, res) => {
-  res.json({ error: false, message: 'Message api registred ✉️' })
-})
+// // List all messages
+// messageRouter.get('/', (req, res) => {
+//   res.json({ error: false, message: 'Message api registred ✉️' })
+// })
 
 export default messageRouter

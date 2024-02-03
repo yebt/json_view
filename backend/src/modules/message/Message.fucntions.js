@@ -1,8 +1,8 @@
 import { getConnection } from '../../app/sqliteConnection.js'
-import { UUID as UUIDVO } from '../uuid/UUID.js'
 
 /**
  * @typedef {import('./Message').Message} Message
+ * @typedef {import('../uuid/UUID').UUID} UUID
  */
 
 /**
@@ -11,7 +11,7 @@ import { UUID as UUIDVO } from '../uuid/UUID.js'
  * @param {Message} message - the message to be stored
  * @return {Promise<Array<number>>} a Promise that resolves to the result of inserting the message into the database
  */
-export async function store (message) {
+async function store (message) {
   const connection = await getConnection()
   const objToInsert = {
     UUID: message.UUID.value,
@@ -25,12 +25,36 @@ export async function store (message) {
 }
 
 /**
+ * Retrieves a message by UUID.
+ *
+ * @param {UUID} UUID - the UUID of the message
+ * @return {Promise<Message?>} The message with the given UUID, wrapped in a Promise
+ */
+async function show (UUID) {
+  const UUIDValue = UUID.value()
+  const connection = await getConnection()
+  return connection('messages').where('UUID', UUIDValue).first()
+}
+
+/**
+ * Retrieves a list of messages from the database with optional limit and offset parameters.
+ *
+ * @param {number} limit - The maximum number of messages to retrieve
+ * @param {number} offset - The number of messages to skip before starting to return messages
+ * @return {Promise<Array>} A promise that resolves to an array of messages
+ */
+async function index (limit = 10, offset = 0) {
+  const connection = await getConnection()
+  return connection('messages').select().limit(limit).offset(offset)
+}
+
+/**
  * Update a message in the database.
  *
  * @param {Message} message - the message object to update
  * @return {Promise<number>} the number of rows updated
  */
-export async function update (message) {
+async function update (message) {
   const connection = await getConnection()
   const objToUpdate = message.toJSON()
   objToUpdate.UUID = message.UUID.value()
@@ -40,11 +64,20 @@ export async function update (message) {
 /**
  * Deletes a message from the database by its UUID.
  *
- * @param {string|UUIDVO} UUID - The UUID of the message to be deleted
+ * @param {UUID} UUID - The UUID of the message to be deleted
  * @return {Promise<number>} A promise that resolves to the number of rows deleted
  */
-export async function deleteByUUID (UUID) {
-  const UUIDValue = UUID instanceof UUIDVO ? UUID.value() : UUID
+async function destroy (UUID) {
+  const UUIDValue = UUID.value()
   const connection = await getConnection()
   return connection('messages').where('UUID', UUIDValue).del()
 }
+
+const MessageDBAdapter = {
+  store,
+  show,
+  index,
+  update,
+  destroy
+}
+export default MessageDBAdapter
