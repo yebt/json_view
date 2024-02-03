@@ -1,14 +1,9 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "compilerOptions": {
-    "module": "ES6",
-    "moduleResolution": "node",
-    "allowJs": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-    },
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"],
+    "$Schema": "https://json.schemastore.org/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    }
 }
