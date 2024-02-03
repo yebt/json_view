@@ -90,7 +90,10 @@ async function destroyAll () {
  */
 async function total () {
   const connection = await getConnection()
-  return connection('messages').count('* as total').first().then((result) => result.total)
+  return connection('messages')
+    .count('* as total')
+    .first()
+    .then((result) => result.total)
 }
 
 const MessageDBAdapter = {

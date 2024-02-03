@@ -4,10 +4,7 @@ import MessageDBAdapter from './Message.fucntions.js'
 import { requireBody, requireParam } from '../../app/utils/util.response.js'
 
 function getAuthorFromRequest (req) {
-  return req.body.author ||
-    (req.headers['x-forwarded-for'] ?? '') +
-      '@' +
-      (req.socket.remoteAddress ?? '')
+  return req.body.author || (req.headers['x-forwarded-for'] ?? '') + '@' + (req.socket.remoteAddress ?? '')
 }
 
 /**
@@ -111,7 +108,8 @@ async function listMessagesCommand (req, res) {
   const limit = parseInt(req.query.limit) || 10
   const offset = (page - 1) * limit
   const total = await MessageDBAdapter.total()
-  const nextUrl = page < Math.ceil(total / limit) ? `http://${req.headers.host}${req.baseUrl}?page=${page + 1}&limit=${limit}` : null
+  const nextUrl =
+    page < Math.ceil(total / limit) ? `http://${req.headers.host}${req.baseUrl}?page=${page + 1}&limit=${limit}` : null
   MessageDBAdapter.index(limit, offset)
     .then((result) => {
       res.json({
@@ -137,8 +135,9 @@ async function listMessagesCommand (req, res) {
  * @return {Promise} a Promise that resolves to the result data or rejects with an error message
  */
 function showMessageCommand (req, res) {
-  if (!requireParam(req, res, 'UUID')) { return null }
-
+  if (!requireParam(req, res, 'UUID')) {
+    return null
+  }
   MessageDBAdapter.show(new UUIDVO(req.params.UUID))
     .then((result) => {
       res.json({
@@ -163,14 +162,16 @@ function showMessageCommand (req, res) {
  * @return {Promise<number>} a promise with the updated message result
  */
 function patchMessageCommand (req, res) {
-  if (!requireParam(req, res, 'UUID')) { return null }
+  if (!requireParam(req, res, 'UUID')) {
+    return null
+  }
   const timestamp = new Date().getTime()
   const UUID = new UUIDVO(req.body.UUID)
   const objToPath = {
     UUID,
     updateAt: timestamp
   };
-  ['author', 'tags', 'content'].forEach(element => {
+  ['author', 'tags', 'content'].forEach((element) => {
     if (req.body[element]) {
       objToPath[element] = req.body[element]
     }
@@ -201,7 +202,9 @@ function patchMessageCommand (req, res) {
  * @return {null} if required parameter is missing, or JSON object with error, message, and data fields
  */
 function deleteMessageCommand (req, res) {
-  if (!requireParam(req, res, 'UUID')) { return null }
+  if (!requireParam(req, res, 'UUID')) {
+    return null
+  }
   MessageDBAdapter.delete(new UUIDVO(req.params.UUID))
     .then((result) => {
       res.json({

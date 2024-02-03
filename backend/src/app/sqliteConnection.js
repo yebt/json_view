@@ -14,7 +14,8 @@ export async function getConnection () {
   if (!connection) {
     connection = Knex(knexConfig)
     if (!existsSync(connection.client.config.connection.filename)) {
-      return connection.migrate.latest(knexConfig)
+      return connection.migrate
+        .latest(knexConfig)
         .then(() => {
           console.log('Database migrated')
           return connection.seed.run()

@@ -18,5 +18,4 @@ export default {
     loadExtensions: ['.mjs']
   },
   useNullAsDefault: true
-
 }
