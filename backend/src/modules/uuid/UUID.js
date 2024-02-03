@@ -1,5 +1,13 @@
 import { randomUUID } from 'node:crypto'
-export default class UUID {
+export class UUID {
+  /**
+   * The UUID string.
+   *
+   * @type {string}
+   * @private
+   * @property
+   */
+  _uuidString = null
   /**
    * Constructor for creating a new instance of the class.
    *
@@ -7,16 +15,28 @@ export default class UUID {
    */
   constructor (uuidString) {
     if (!uuidString) {
-      this.uuidString = UUID.generate()
-    } else if (!UUID.isValidUUID(uuidString)) {
+      throw new Error('Missing UUID string')
+    }
+    if (!UUID.isValidUUID(uuidString)) {
       throw new Error('Invalid UUID format')
     }
-    this.uuidString = uuidString
+    this._uuidString = uuidString
+  }
+
+  /**
+   * A getter function to retrieve the value.
+   *
+   * @return {string} the value of the _uuidString property
+   */
+  get value () {
+    return this._uuidString
   }
 
   /**
    * Checks if the input string is a valid UUID.
    *
+   * @method
+   * @static
    * @param {string} uuidString - The string to be checked for UUID format.
    * @return {boolean} Whether the input string is a valid UUID.
    */
@@ -26,13 +46,11 @@ export default class UUID {
     return uuidRegex.test(uuidString)
   }
 
-  get value () {
-    return this.uuidString
-  }
-
   /**
    * Generate a new UUID.
    *
+   * @method
+   * @static
    * @return {UUID} a new UUID
    */
   static generate () {
