@@ -73,11 +73,33 @@ async function destroy (UUID) {
   return connection('messages').where('UUID', UUIDValue).del()
 }
 
+/**
+ * Destroys all messages in the database.
+ *
+ * @return {Promise<number>} The number of messages destroyed
+ */
+async function destroyAll () {
+  const connection = await getConnection()
+  return connection('messages').del()
+}
+
+/**
+ * Asynchronous function to calculate the total count of messages.
+ *
+ * @return {Promise<number>} The total count of messages
+ */
+async function total () {
+  const connection = await getConnection()
+  return connection('messages').count('* as total').first().then((result) => result.total)
+}
+
 const MessageDBAdapter = {
   store,
   show,
   index,
   update,
-  destroy
+  destroy,
+  destroyAll,
+  total
 }
 export default MessageDBAdapter
