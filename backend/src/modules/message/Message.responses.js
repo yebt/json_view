@@ -106,15 +106,18 @@ function storeDebuggMessageCommand (req, res) {
  * @param {ServerResponse} res - the response object
  * @return {Promise} a promise that resolves to the JSON response
  */
-function listMessagesCommand (req, res) {
+async function listMessagesCommand (req, res) {
   const page = parseInt(req.query.page) || 1
   const limit = parseInt(req.query.limit) || 10
   const offset = (page - 1) * limit
+  const total = await MessageDBAdapter.total()
+  const nextUrl = page < Math.ceil(total / limit) ? `http://${req.headers.host}${req.baseUrl}?page=${page + 1}&limit=${limit}` : null
   MessageDBAdapter.index(limit, offset)
     .then((result) => {
       res.json({
         error: false,
-        data: result
+        data: result,
+        next: nextUrl
       })
     })
     .catch((err) => {
