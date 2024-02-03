@@ -155,6 +155,13 @@ function showMessageCommand (req, res) {
     })
 }
 
+/**
+ * Update a message command and return the result.
+ *
+ * @param {IncomingMessage} req - the request object
+ * @param {ServerResponse} res - the response object
+ * @return {Promise<number>} a promise with the updated message result
+ */
 function patchMessageCommand (req, res) {
   if (!requireParam(req, res, 'UUID')) { return null }
   const timestamp = new Date().getTime()
@@ -186,6 +193,13 @@ function patchMessageCommand (req, res) {
     })
 }
 
+/**
+ * Deletes a message using the provided UUID.
+ *
+ * @param {IncomingMessage} req - the request object
+ * @param {ServerResponse} res - the response object
+ * @return {null} if required parameter is missing, or JSON object with error, message, and data fields
+ */
 function deleteMessageCommand (req, res) {
   if (!requireParam(req, res, 'UUID')) { return null }
   MessageDBAdapter.delete(new UUIDVO(req.params.UUID))
@@ -205,12 +219,38 @@ function deleteMessageCommand (req, res) {
     })
 }
 
+/**
+ * Delete all message command.
+ *
+ * @param {IncomingMessage} req - the request object
+ * @param {ServerResponse} res - the response object
+ * @return {type}
+ */
+function deleteAllMessageCommand (req, res) {
+  MessageDBAdapter.destroyAll()
+    .then((result) => {
+      res.json({
+        error: false,
+        message: 'All messages deleted successfully',
+        data: result
+      })
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).json({
+        error: true,
+        message: err.message
+      })
+    })
+}
+
 const MessageHTTPAdapter = {
   storeMessageCommand,
   storeDebuggMessageCommand,
   listMessagesCommand,
   showMessageCommand,
   patchMessageCommand,
-  deleteMessageCommand
+  deleteMessageCommand,
+  deleteAllMessageCommand
 }
 export default MessageHTTPAdapter

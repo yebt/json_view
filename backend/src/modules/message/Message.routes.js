@@ -15,5 +15,7 @@ messageRouter.get('/:UUID', MessageHTTPAdapter.showMessageCommand)
 messageRouter.put('/:UUID', MessageHTTPAdapter.patchMessageCommand)
 // Delete a message
 messageRouter.delete('/:UUID', MessageHTTPAdapter.deleteMessageCommand)
+// Clear all messages
+messageRouter.delete('/all', MessageHTTPAdapter.deleteAllMessageCommand)
 
 export default messageRouter
