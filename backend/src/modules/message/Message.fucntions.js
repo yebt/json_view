@@ -45,7 +45,7 @@ async function show (UUID) {
  */
 async function index (limit = 10, offset = 0) {
   const connection = await getConnection()
-  return connection('messages').select().limit(limit).offset(offset)
+  return connection('messages').select().limit(limit).offset(offset).orderBy('created_at', 'desc')
 }
 
 /**
