@@ -8,7 +8,9 @@ import APIV1routes from './app/API.v1.routes.js'
 const PORT = process.env.PORT || 3000
 //  ---------------------------------------------------
 const app = express()
-app.use(express.json()).use(cors())
+app.use(cors()) // Validate cors
+  .use(express.json()) // support json bodies
+  .use(express.urlencoded({ extended: true })) // suport encoded bodies
 //  ---------------------------------------------------
 app.get('/', (req, res, next) => {
   res.json({ error: false, message: 'Express server is working 🚀️😎' })
