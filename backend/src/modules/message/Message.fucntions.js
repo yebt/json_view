@@ -64,7 +64,7 @@ async function indexFormated (limit = 10, offset = 0) {
         // date: timstamp to date
         created: new Date(message.created_at),
         updated: new Date(message.updated_at),
-        content: message.content,
+        content: JSON.parse(message.content),
         UUID: message.UUID,
         author: message.author,
         tags: JSON.parse(message.tags)
