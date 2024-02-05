@@ -49,6 +49,31 @@ async function index (limit = 10, offset = 0) {
 }
 
 /**
+ * Retrieves a list of messages from the database with optional limit and offset parameters with
+ * a format to be consummed.
+ *
+ * @param {number} limit - The maximum number of messages to retrieve
+ * @param {number} offset - The number of messages to skip before starting to return messages
+ * @return {Promise<Array>} A promise that resolves to an array of messages
+ */
+async function indexFormated (limit = 10, offset = 0) {
+  const connection = await getConnection()
+  return connection('messages').select().limit(limit).offset(offset).orderBy('created_at', 'desc').then((result) => {
+    return result.map((message) => {
+      return {
+        // date: timstamp to date
+        created: new Date(message.created_at),
+        updated: new Date(message.updated_at),
+        content: message.content,
+        UUID: message.UUID,
+        author: message.author,
+        tags: JSON.parse(message.tags)
+      }
+    })
+  })
+}
+
+/**
  * Update a message in the database.
  *
  * @param {Message} message - the message object to update
@@ -100,6 +125,7 @@ const MessageDBAdapter = {
   store,
   show,
   index,
+  indexFormated,
   update,
   destroy,
   destroyAll,

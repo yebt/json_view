@@ -128,6 +128,37 @@ async function listMessagesCommand (req, res) {
 }
 
 /**
+ * A function to list formated messages for the driver.
+ *
+ * @param {IncomingMessage} req - the request object
+ * @param {ServerResponse} res - the response object
+ * @return {Promise} a promise that resolves to the JSON response
+ */
+async function listFormatedMessagesCommand (req, res) {
+  const page = parseInt(req.query.page) || 1
+  const limit = parseInt(req.query.limit) || 10
+  const offset = (page - 1) * limit
+  const total = await MessageDBAdapter.total()
+  const nextUrl =
+    page < Math.ceil(total / limit) ? `http://${req.headers.host}${req.baseUrl}?page=${page + 1}&limit=${limit}` : null
+  MessageDBAdapter.indexFormated(limit, offset)
+    .then((result) => {
+      res.json({
+        error: false,
+        data: result,
+        next: nextUrl
+      })
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).json({
+        error: true,
+        message: err.message
+      })
+    })
+}
+
+/**
  * Display the message driver based on the UUID provided in the request parameters.
  *
  * @param {IncomingMessage} req - the request object
@@ -251,6 +282,7 @@ const MessageHTTPAdapter = {
   storeMessageCommand,
   storeDebuggMessageCommand,
   listMessagesCommand,
+  listFormatedMessagesCommand,
   showMessageCommand,
   patchMessageCommand,
   deleteMessageCommand,
